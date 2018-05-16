@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Survey</title>
+    <link rel="stylesheet" type="text/css" href="style/survey.css">
+    <link rel="stylesheet" type="text/css" href="style/survey.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <h1>Take the Survey, Find Friends</h1>
+        <h2>Answer on a scale of 1-5 with 5 being total agreement and 0 being total disagereement</h2>
+        <div id="form-container">
+            <form>
+                Enter Your Full, Legal Name
+                <br>
+                <input type="text" id="name">
+                <br>1. I like going out more than staying in.
+                <br>
+                <input type="number" id="q1" min="1" max="5">
+                <br>2. Are you now or have you ever been a member of the communist party?
+                <br>
+                <input type="number" id="q2" min="1" max="5">
+                <br>3. Are you sure?
+                <br>
+                <input type="number" id="q3" min="1" max="5">
+                <br>4. Are you realllllly sure?
+                <br>
+                <input type="number" id="q4" min="1" max="5">
+                <br>5. We promise we won't hold it against you. Just admit it.
+                <br>
+                <input type="number" id="q5" min="1" max="5">
+                <br>6. Ok fine, we believe you. How much of a fan of Karl Marx are you?
+                <br>
+                <input type="number" id="q6" min="1" max="5">
+                <br>7. How about Stalin?
+                <br>
+                <input type="number" id="q7" min="1" max="5">
+                <br>8. I hear Castro was a good guy. You like him?
+                <br>
+                <input type="number" id="q8" min="1" max="5">
+                <br>9. We promise this isn't a trap. You do love the government controlling the means of production. Right?
+                <br>
+                <input type="number" id="q9" min="1" max="5">
+                <br>10. How much do you agree with the quote "From each according to his ability, to each according to his needs"
+                <br>
+                <input type="number" id="q10" min="1" max="5">
+
+                <br>Press submit. We promise it isn't linked to the FBI.
+                <br>
+                <input id="submit" type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+        var newFriend = {
+            name:document.getElementById('name').val().trim().replace(/\s+/g, "").toLowerCase(),
+            array: [$("#q1").val(),
+            $("#q2").val(),
+            $("#q3").val(),
+            $("#q4").val(),
+            $("#q5").val(),
+            $("#q6").val(),
+            $("#q7").val(),
+            $("#q8").val(),
+            $("#q9").val(),
+            $("#q10").val()
+            ]
+        }
+        console.log(newFriend);
+
+        $.post("/api/friends", newFriend,
+            function (data) {
+                console.log("created")
+
+
+                $("#name").val("");
+                $("#q1").val("");
+                $("#q2").val("");
+                $("#q3").val("");
+                $("#q4").val("");
+                $("#q5").val("");
+                $("#q6").val("");
+                $("#q7").val("");
+                $("#q8").val("");
+                $("#q9").val("");
+                $("#q10").val("");
+            });
+
+    });
+
+
+</script>
+
+</html>
