@@ -62,7 +62,7 @@
     $("#submit").on("click", function (event) {
         event.preventDefault();
         var newFriend = {
-            name:document.getElementById('name').val().trim().replace(/\s+/g, "").toLowerCase(),
+            name: $("#name").val().trim().replace(/\s+/g, "").toLowerCase(),
             array: [$("#q1").val(),
             $("#q2").val(),
             $("#q3").val(),
