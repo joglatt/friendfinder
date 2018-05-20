@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Survey</title>
-    <link rel="stylesheet" type="text/css" href="style/survey.css">
+    <link rel="stylesheet" type="text/css" href="style/reset.css">
     <link rel="stylesheet" type="text/css" href="style/survey.css">
     <script src="https://code.jquery.com/jquery.js"></script>
 </head>
@@ -20,6 +20,9 @@
                 Enter Your Full, Legal Name
                 <br>
                 <input type="text" id="name">
+                <br>Please insert a url of an image of yourself for future matching?
+                <br>
+                <input type="text" id="image">
                 <br>1. I like going out more than staying in.
                 <br>
                 <input type="number" id="q1" min="1" max="5">
@@ -57,12 +60,22 @@
             </form>
         </div>
     </div>
+    <div id="modal">
+        <div id="modal-content">
+            <button id="close">&times;</button>
+
+        </div>
+        <div id="modal-image"></div>
+    </div>
+
+
 </body>
 <script type="text/javascript">
     $("#submit").on("click", function (event) {
         event.preventDefault();
         var newFriend = {
-            name: $("#name").val().trim().replace(/\s+/g, "").toLowerCase(),
+            name: $("#name").val().trim().replace(/\s+/g, ""),
+            image: $("#image").val(),
             array: [$("#q1").val(),
             $("#q2").val(),
             $("#q3").val(),
@@ -83,6 +96,7 @@
 
 
                 $("#name").val("");
+                $("#image").val("");
                 $("#q1").val("");
                 $("#q2").val("");
                 $("#q3").val("");
@@ -93,11 +107,70 @@
                 $("#q8").val("");
                 $("#q9").val("");
                 $("#q10").val("");
+                $("#modal").show();
+                $("#container").hide();
+
             });
 
+        var currentURL = window.location.origin;
+
+        // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+        $.ajax({ url: currentURL + "/api/friends", method: "GET" })
+            .then(function (friendData) {
+                // Here we are logging the URL so we have access to it for troubleshooting
+                console.log("------------------------------------");
+                console.log("URL: " + currentURL + "/api/friends");
+                console.log("------------------------------------");
+
+                // Here we then log the NYTData to console, where it will show up as an object.
+                console.log(friendData);
+                console.log("------------------------------------");
+                var friend;
+
+                (function differences() {
+                    var total;
+                    // loops through objects
+                    for (var j = 0; j < friendData.length - 1; j++) {
+                        total = 0;
+                        //loops through arrays
+                        for (var k = 0; k < friendData[j].array.length; k++) {
+                            total += Math.abs(
+                                friendData[friendData.length - 1].array[k] - friendData[j].array[k]
+                            );
+                            friendData[j].difference = total;
+
+                        }
+                    }
+                    var temp = friendData[0].difference;
+                    friend = friendData[0];
+                    for (var i = 0; i < friendData.length - 1; i++) {
+                        if (friendData[i].difference < temp) {
+                            temp = friendData[i].difference;
+                            friend = friendData[i];
+                        }
+                        console.log(friend);
+                    }
+
+
+                })()
+
+
+
+
+                // Create the HTML Well (Section) and Add the table content for each reserved tabl
+                $("#modal-content").append("<h2>" + "Your New Friend is: " + friend.name + "</h2>");
+                var img = $('<img />', {
+                    id: 'friend-pic',
+                    src: `${friend.image}`,
+                    alt: 'alt text for friend image'
+                }).appendTo($('#modal-image'));
+            });
     });
 
-
+    $("#close").on("click", function (event) {
+        $("#modal").hide();
+        $("#container").show();
+    });
 </script>
 
 </html>

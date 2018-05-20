@@ -8,6 +8,9 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//Serves static content (css, js)
+app.use(express.static(__dirname + "/public"));
+
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
