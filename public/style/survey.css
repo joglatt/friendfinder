@@ -1,21 +1,28 @@
+body {
+    background-color: lightgray;
+}
+
 input {
     padding: .5%;
     border: 2px inset black;
     border-radius: 5%;
-    background: lightgrey;
+    background: whitesmoke;
 }
 
 h1 {
     text-align: center;
     font-size: 3.5vw;
+    margin: 0.5%;
 }
 
 h2 {
     font-size: 2vw;
     text-align: center;
+    margin: 0.5%;
 }
 
 #form-container {
+    background:lightslategray;
     font-size: 1.5vw;
     text-align: center;
     border: 3px solid black;
@@ -44,7 +51,7 @@ input {
 }
 
 #modal-image {
-    margin-left:20%;
+    margin-left: 20%;
     /* width: 100%;
     height: auto; */
 }
