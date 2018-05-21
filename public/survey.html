@@ -25,34 +25,34 @@
                 <input type="text" id="image">
                 <br>1. I like going out more than staying in.
                 <br>
-                <input type="number" id="q1" min="1" max="5">
+                <input type="number" class="quiz" id="q1" min="1" max="5">
                 <br>2. Are you now or have you ever been a member of the communist party?
                 <br>
-                <input type="number" id="q2" min="1" max="5">
+                <input type="number" class="quiz" id="q2" min="1" max="5">
                 <br>3. Are you sure?
                 <br>
-                <input type="number" id="q3" min="1" max="5">
+                <input type="number" class="quiz" id="q3" min="1" max="5">
                 <br>4. Are you realllllly sure?
                 <br>
-                <input type="number" id="q4" min="1" max="5">
+                <input type="number" class="quiz" id="q4" min="1" max="5">
                 <br>5. We promise we won't hold it against you. Just admit it.
                 <br>
-                <input type="number" id="q5" min="1" max="5">
+                <input type="number" class="quiz" id="q5" min="1" max="5">
                 <br>6. Ok fine, we believe you. How much of a fan of Karl Marx are you?
                 <br>
-                <input type="number" id="q6" min="1" max="5">
+                <input type="number" class="quiz" id="q6" min="1" max="5">
                 <br>7. How about Stalin?
                 <br>
-                <input type="number" id="q7" min="1" max="5">
+                <input type="number" class="quiz" id="q7" min="1" max="5">
                 <br>8. I hear Castro was a good guy. You like him?
                 <br>
-                <input type="number" id="q8" min="1" max="5">
+                <input type="number" class="quiz" id="q8" min="1" max="5">
                 <br>9. We promise this isn't a trap. You do love the government controlling the means of production. Right?
                 <br>
-                <input type="number" id="q9" min="1" max="5">
+                <input type="number" class="quiz" id="q9" min="1" max="5">
                 <br>10. How much do you agree with the quote "From each according to his ability, to each according to his needs"
                 <br>
-                <input type="number" id="q10" min="1" max="5">
+                <input type="number" class="quiz" id="q10" min="1" max="5">
 
                 <br>Press submit. We promise it isn't linked to the FBI.
                 <br>
@@ -89,84 +89,85 @@
             $("#q10").val()
             ]
         }
+
         console.log(newFriend);
 
-        $.post("/api/friends", newFriend,
-            function (data) {
-                console.log("created")
+            $.post("/api/friends", newFriend,
+                function (data) {
+                    console.log("created")
 
 
-                $("#name").val("");
-                $("#image").val("");
-                $("#q1").val("");
-                $("#q2").val("");
-                $("#q3").val("");
-                $("#q4").val("");
-                $("#q5").val("");
-                $("#q6").val("");
-                $("#q7").val("");
-                $("#q8").val("");
-                $("#q9").val("");
-                $("#q10").val("");
-                $("#modal").show();
-                $("#container").hide();
+                    $("#name").val("");
+                    $("#image").val("");
+                    $("#q1").val("");
+                    $("#q2").val("");
+                    $("#q3").val("");
+                    $("#q4").val("");
+                    $("#q5").val("");
+                    $("#q6").val("");
+                    $("#q7").val("");
+                    $("#q8").val("");
+                    $("#q9").val("");
+                    $("#q10").val("");
+                    $("#modal").show();
+                    $("#container").hide();
 
-            });
+                });
 
-        var currentURL = window.location.origin;
+            var currentURL = window.location.origin;
 
-        // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
-        $.ajax({ url: currentURL + "/api/friends", method: "GET" })
-            .then(function (friendData) {
-                // Here we are logging the URL so we have access to it for troubleshooting
-                console.log("------------------------------------");
-                console.log("URL: " + currentURL + "/api/friends");
-                console.log("------------------------------------");
+            // The AJAX function uses the URL of our API to GET the data associated with it (initially set to localhost)
+            $.ajax({ url: currentURL + "/api/friends", method: "GET" })
+                .then(function (friendData) {
+                    // Here we are logging the URL so we have access to it for troubleshooting
+                    console.log("------------------------------------");
+                    console.log("URL: " + currentURL + "/api/friends");
+                    console.log("------------------------------------");
 
-                // Here we then log the NYTData to console, where it will show up as an object.
-                console.log(friendData);
-                console.log("------------------------------------");
-                var friend;
+                    // Here we then log the NYTData to console, where it will show up as an object.
+                    console.log(friendData);
+                    console.log("------------------------------------");
+                    var friend;
 
-                (function differences() {
-                    var total;
-                    // loops through objects
-                    for (var j = 0; j < friendData.length - 1; j++) {
-                        total = 0;
-                        //loops through arrays
-                        for (var k = 0; k < friendData[j].array.length; k++) {
-                            total += Math.abs(
-                                friendData[friendData.length - 1].array[k] - friendData[j].array[k]
-                            );
-                            friendData[j].difference = total;
+                    (function differences() {
+                        var total;
+                        // loops through objects
+                        for (var j = 0; j < friendData.length - 1; j++) {
+                            total = 0;
+                            //loops through arrays
+                            for (var k = 0; k < friendData[j].array.length; k++) {
+                                total += Math.abs(
+                                    friendData[friendData.length - 1].array[k] - friendData[j].array[k]
+                                );
+                                friendData[j].difference = total;
 
+                            }
                         }
-                    }
-                    var temp = friendData[0].difference;
-                    friend = friendData[0];
-                    for (var i = 0; i < friendData.length - 1; i++) {
-                        if (friendData[i].difference < temp) {
-                            temp = friendData[i].difference;
-                            friend = friendData[i];
+                        var temp = friendData[0].difference;
+                        friend = friendData[0];
+                        for (var i = 0; i < friendData.length - 1; i++) {
+                            if (friendData[i].difference < temp) {
+                                temp = friendData[i].difference;
+                                friend = friendData[i];
+                            }
+                            console.log(friend);
                         }
-                        console.log(friend);
-                    }
 
 
-                })()
+                    })()
 
 
 
 
-                // Create the HTML Well (Section) and Add the table content for each reserved tabl
-                $("#modal-content").append("<h2>" + "Your New Friend is: " + friend.name + "</h2>");
-                var img = $('<img />', {
-                    id: 'friend-pic',
-                    src: `${friend.image}`,
-                    alt: 'alt text for friend image'
-                }).appendTo($('#modal-image'));
-            });
-    });
+                    // Create the HTML Well (Section) and Add the table content for each reserved tabl
+                    $("#modal-content").append("<h3>" + "Your New Friend is: " + friend.name + "</h3>");
+                    var img = $('<img />', {
+                        id: 'friend-pic',
+                        src: `${friend.image}`,
+                        alt: 'alt text for friend image'
+                    }).appendTo($('#modal-content'));
+                });
+        });
 
     $("#close").on("click", function (event) {
         $("#modal-image").empty();

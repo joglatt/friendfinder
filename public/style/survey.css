@@ -50,12 +50,17 @@ input {
     margin: auto;
 }
 
-#modal-image {
-    margin-left: 20%;
-    /* width: 100%;
-    height: auto; */
-}
+/* #modal-image {
+    margin-left: 40%;
 
-h2 {
-    font-size: 2vw;
+} */
+
+h3 {
+    text-align:center;
+    font-size: 90px;
+}
+img{
+    margin-left:35%;
+    height:400px;
+    width:400px;
 }
